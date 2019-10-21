@@ -21,7 +21,7 @@ class App extends Component {
   addTodo(e) {
     e.preventDefault();
 
-    axios.post(`${BASE_URL}/api/v1/todos/new/`, {
+    axios.post(`/api/v1/todos/new/`, {
       text: 'Make dentist appointment',
       due_date: '2020-11-15'
     })
