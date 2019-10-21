@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import axios from "axios";
 import './App.css';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
@@ -22,12 +20,13 @@ class App extends Component {
     e.preventDefault();
 
     axios.post(`/api/v1/todos/new/`, {
-      text: 'Make dentist appointment',
+      text: 'Pick up dry cleaning',
       due_date: '2020-11-15'
     })
     .then(res => {
-        console.log(res);
-        this.setState({todos: res.data});
+        let todos = [...this.state.todos];
+        todos.push(res.data);
+        this.setState({todos});
     })
     .catch(error => {
         console.log(error);
@@ -35,9 +34,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get(`${BASE_URL}/api/v1/todos/`)
+    axios.get(`/api/v1/todos/`)
     .then(res => {
-        console.log(res);
         this.setState({todos: res.data});
     })
     .catch(error => {
